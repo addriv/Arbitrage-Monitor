@@ -21357,8 +21357,12 @@ var _redux = __webpack_require__(50);
 
 var _ui_reducer = __webpack_require__(76);
 
+var _ui_reducer2 = _interopRequireDefault(_ui_reducer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var rootReducer = (0, _redux.combineReducers)({
-  ui: _ui_reducer.uiReducer
+  ui: _ui_reducer2.default
 });
 
 /***/ }),
@@ -21367,6 +21371,24 @@ var rootReducer = (0, _redux.combineReducers)({
 
 "use strict";
 
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _defaultState = {};
+
+var uiReducer = function uiReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _defaultState;
+  var action = arguments[1];
+
+  Object.freeze(state);
+  switch (action.type) {
+    default:
+      return state;
+  }
+};
+
+exports.default = uiReducer;
 
 /***/ })
 /******/ ]);
