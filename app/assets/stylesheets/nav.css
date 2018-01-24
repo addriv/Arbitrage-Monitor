@@ -1,5 +1,12 @@
 .nav {
-  height: 100px;
+  height: 75px;
   background-color: #222;
   color: white; 
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.nav .title {
+  font-size: 30px;
+  margin: 15px;
 }

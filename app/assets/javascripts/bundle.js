@@ -21206,9 +21206,15 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"react-router-dom\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+
 var _home_container = __webpack_require__(71);
 
 var _home_container2 = _interopRequireDefault(_home_container);
+
+var _nav_container = __webpack_require__(73);
+
+var _nav_container2 = _interopRequireDefault(_nav_container);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21216,7 +21222,12 @@ var App = function App() {
   return _react2.default.createElement(
     'div',
     null,
-    _react2.default.createElement(_home_container2.default, null)
+    _react2.default.createElement(_nav_container2.default, null),
+    _react2.default.createElement(
+      _reactRouterDom.Switch,
+      null,
+      _react2.default.createElement(_home_container2.default, { path: '/' })
+    )
   );
 };
 
@@ -21268,10 +21279,6 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _nav_container = __webpack_require__(73);
-
-var _nav_container2 = _interopRequireDefault(_nav_container);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21290,16 +21297,15 @@ var Home = function (_React$Component) {
   }
 
   _createClass(Home, [{
-    key: 'render',
+    key: "render",
     value: function render() {
       return _react2.default.createElement(
-        'div',
-        { className: 'home' },
-        _react2.default.createElement(_nav_container2.default, null),
+        "div",
+        { className: "home" },
         _react2.default.createElement(
-          'div',
+          "div",
           null,
-          'This is the HOME component'
+          "This is the HOME component"
         )
       );
     }
@@ -21370,16 +21376,33 @@ var Nav = function (_React$Component) {
   function Nav(props) {
     _classCallCheck(this, Nav);
 
-    return _possibleConstructorReturn(this, (Nav.__proto__ || Object.getPrototypeOf(Nav)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Nav.__proto__ || Object.getPrototypeOf(Nav)).call(this, props));
+
+    _this.handleExchange = _this.handleExchange.bind(_this);
+    return _this;
   }
 
   _createClass(Nav, [{
+    key: "handleExchange",
+    value: function handleExchange(event) {
+      var exchange = event.target.id;
+    }
+  }, {
     key: "render",
     value: function render() {
       return _react2.default.createElement(
         "div",
         { className: "nav" },
-        "This is the NAV component"
+        _react2.default.createElement(
+          "div",
+          { className: "title" },
+          "Crypto Arbitrage"
+        ),
+        _react2.default.createElement(
+          "button",
+          { id: "kucoin", onClick: this.handleExchange },
+          "Kucoin"
+        )
       );
     }
   }]);
