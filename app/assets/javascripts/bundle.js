@@ -21222,6 +21222,10 @@ var _nav_container = __webpack_require__(73);
 
 var _nav_container2 = _interopRequireDefault(_nav_container);
 
+var _kucoin_container = __webpack_require__(123);
+
+var _kucoin_container2 = _interopRequireDefault(_kucoin_container);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var App = function App() {
@@ -21232,15 +21236,13 @@ var App = function App() {
     _react2.default.createElement(
       _reactRouterDom.Switch,
       null,
+      _react2.default.createElement(_reactRouterDom.Route, { path: '/kucoin', component: _kucoin_container2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _home_container2.default })
     )
   );
 };
 
 exports.default = App;
-
-
-{/* <NavContainer /> */}
 
 /***/ }),
 /* 71 */
@@ -21371,6 +21373,8 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(97);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21392,25 +21396,29 @@ var Nav = function (_React$Component) {
   }
 
   _createClass(Nav, [{
-    key: "handleExchange",
+    key: 'handleExchange',
     value: function handleExchange(event) {
       var exchange = event.target.id;
     }
   }, {
-    key: "render",
+    key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        "div",
-        { className: "nav" },
+        'div',
+        { className: 'nav' },
         _react2.default.createElement(
-          "div",
-          { className: "title" },
-          "Crypto Arbitrage"
+          'div',
+          { className: 'title' },
+          'Crypto Arbitrage'
         ),
         _react2.default.createElement(
-          "button",
-          { id: "kucoin", onClick: this.handleExchange },
-          "Kucoin"
+          _reactRouterDom.Link,
+          { to: '/kucoin', className: 'kucoin-link' },
+          _react2.default.createElement(
+            'div',
+            null,
+            'Kucoin'
+          )
         )
       );
     }
@@ -25831,6 +25839,85 @@ var withRouter = function withRouter(Component) {
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (withRouter);
+
+/***/ }),
+/* 123 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__(9);
+
+var _Kucoin = __webpack_require__(124);
+
+var _Kucoin2 = _interopRequireDefault(_Kucoin);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {};
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {};
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Kucoin2.default);
+
+/***/ }),
+/* 124 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Kucoin = function (_React$Component) {
+  _inherits(Kucoin, _React$Component);
+
+  function Kucoin(props) {
+    _classCallCheck(this, Kucoin);
+
+    return _possibleConstructorReturn(this, (Kucoin.__proto__ || Object.getPrototypeOf(Kucoin)).call(this, props));
+  }
+
+  _createClass(Kucoin, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        'This is the KUCOIN component'
+      );
+    }
+  }]);
+
+  return Kucoin;
+}(_react2.default.Component);
+
+exports.default = Kucoin;
 
 /***/ })
 /******/ ]);

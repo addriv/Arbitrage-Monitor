@@ -73,3 +73,9 @@ input,
 select {
   vertical-align: middle;
 }
+a:link {
+  text-decoration: none;
+  font-weight: bold;
+  background-color: #ddd;
+  color: blue;
+}

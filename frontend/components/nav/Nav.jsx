@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default class Nav extends React.Component {
   constructor(props) {
@@ -14,7 +15,9 @@ export default class Nav extends React.Component {
     return (
       <div className="nav">
         <div className="title">Crypto Arbitrage</div>
-        <button id="kucoin" onClick={this.handleExchange}>Kucoin</button>
+        <Link to="/kucoin" className="kucoin-link">
+          <div>Kucoin</div>
+        </Link>
       </div>
     );
   }
