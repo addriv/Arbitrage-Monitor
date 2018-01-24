@@ -7,7 +7,7 @@ export default class Nav extends React.Component {
 
   render() {
     return (
-      <div>This is the NAV component</div>
+      <div className="nav">This is the NAV component</div>
     );
   }
 }

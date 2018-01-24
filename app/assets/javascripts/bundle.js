@@ -21500,12 +21500,12 @@ var Nav = function (_React$Component) {
   }
 
   _createClass(Nav, [{
-    key: 'render',
+    key: "render",
     value: function render() {
       return _react2.default.createElement(
-        'div',
-        null,
-        'This is the NAV component'
+        "div",
+        { className: "nav" },
+        "This is the NAV component"
       );
     }
   }]);
