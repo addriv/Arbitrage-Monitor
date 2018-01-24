@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import intraKucoinReducer from './intra_kucoin_reducer';
+import intraKucoinReducer from './intra_kucoin/intra_kucoin_reducer';
 
 const intraReducer = combineReducers({
-  intra: intraKucoinReducer
+  kucoin: intraKucoinReducer
 });
 
 export default intraReducer;

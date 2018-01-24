@@ -5,7 +5,7 @@ const _defaultState = {
   'BCH-BTC': null
 };
 
-const intraKucoinReducer = (state = _defaultState, action) => {
+const kucoinBTCPairsReducer = (state = _defaultState, action) => {
   Object.freeze(state);
   switch (action.type) {
     default:
@@ -13,4 +13,4 @@ const intraKucoinReducer = (state = _defaultState, action) => {
   }
 };
 
-export default intraKucoinReducer;
+export default kucoinBTCPairsReducer;
