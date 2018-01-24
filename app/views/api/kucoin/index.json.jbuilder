@@ -1,1 +1,1 @@
-@kucoin_data
+json.extract! @data, :coin_type, :last_trade_price
