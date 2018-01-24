@@ -3,6 +3,13 @@ import React from 'react';
 export default class Kucoin extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      DBC: 0
+    };
+  }
+
+  componentDidMount() {
+    
   }
 
   render() {

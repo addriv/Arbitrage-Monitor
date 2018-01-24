@@ -14,10 +14,8 @@ export default class Nav extends React.Component {
   render() {
     return (
       <div className="nav">
-        <div className="title">Crypto Arbitrage</div>
-        <Link to="/kucoin" className="kucoin-link">
-          <div>Kucoin</div>
-        </Link>
+        <div className="title">CRYPTO ARBITRAGE</div>
+        <Link to="/kucoin" className="kucoin-link">Kucoin</Link>
       </div>
     );
   }

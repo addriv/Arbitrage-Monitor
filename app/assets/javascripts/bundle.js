@@ -21409,16 +21409,12 @@ var Nav = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'title' },
-          'Crypto Arbitrage'
+          'CRYPTO ARBITRAGE'
         ),
         _react2.default.createElement(
           _reactRouterDom.Link,
           { to: '/kucoin', className: 'kucoin-link' },
-          _react2.default.createElement(
-            'div',
-            null,
-            'Kucoin'
-          )
+          'Kucoin'
         )
       );
     }
@@ -21434,7 +21430,7 @@ exports.default = Nav;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
+
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -21447,25 +21443,19 @@ var _reduxThunk = __webpack_require__(76);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
+var _reduxLogger = __webpack_require__(79);
+
+var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
+
 var _root_reducer = __webpack_require__(77);
 
 var _root_reducer2 = _interopRequireDefault(_root_reducer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var middlewares = [_reduxThunk2.default];
-
-if (process.env.RAILS_ENV === 'development') {
-  var _require = __webpack_require__(79),
-      logger = _require.logger;
-
-  middlewares.push(logger);
-}
-
 var configureStore = exports.configureStore = function configureStore(preloadedState) {
-  return (0, _redux.createStore)(_root_reducer2.default, preloadedState, _redux.applyMiddleware.apply(undefined, middlewares));
+  return (0, _redux.createStore)(_root_reducer2.default, preloadedState, (0, _redux.applyMiddleware)(_reduxThunk2.default, _reduxLogger2.default));
 };
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 /* 76 */
@@ -21513,9 +21503,14 @@ var _ui_reducer = __webpack_require__(78);
 
 var _ui_reducer2 = _interopRequireDefault(_ui_reducer);
 
+var _arbitrage_reducer = __webpack_require__(125);
+
+var _arbitrage_reducer2 = _interopRequireDefault(_arbitrage_reducer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var rootReducer = (0, _redux.combineReducers)({
+  arbitrage: _arbitrage_reducer2.default,
   ui: _ui_reducer2.default
 });
 
@@ -25900,10 +25895,18 @@ var Kucoin = function (_React$Component) {
   function Kucoin(props) {
     _classCallCheck(this, Kucoin);
 
-    return _possibleConstructorReturn(this, (Kucoin.__proto__ || Object.getPrototypeOf(Kucoin)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Kucoin.__proto__ || Object.getPrototypeOf(Kucoin)).call(this, props));
+
+    _this.state = {
+      DBC: 0
+    };
+    return _this;
   }
 
   _createClass(Kucoin, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {}
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -25918,6 +25921,81 @@ var Kucoin = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Kucoin;
+
+/***/ }),
+/* 125 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _redux = __webpack_require__(11);
+
+var _intra_reducer = __webpack_require__(126);
+
+var _intra_reducer2 = _interopRequireDefault(_intra_reducer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var arbitrageReducer = (0, _redux.combineReducers)({
+  intra: _intra_reducer2.default
+});
+
+exports.default = arbitrageReducer;
+
+/***/ }),
+/* 126 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _redux = __webpack_require__(11);
+
+var _intra_kucoin_reducer = __webpack_require__(127);
+
+var _intra_kucoin_reducer2 = _interopRequireDefault(_intra_kucoin_reducer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var intraReducer = (0, _redux.combineReducers)({
+  intra: _intra_kucoin_reducer2.default
+});
+
+exports.default = intraReducer;
+
+/***/ }),
+/* 127 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _defaultState = {};
+
+var intraKucoinReducer = function intraKucoinReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _defaultState;
+  var action = arguments[1];
+
+  Object.freeze(state);
+  switch (action.type) {
+    default:
+      return state;
+  }
+};
+
+exports.default = intraKucoinReducer;
 
 /***/ })
 /******/ ]);
