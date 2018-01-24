@@ -25982,7 +25982,12 @@ exports.default = intraReducer;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var _defaultState = {};
+var _defaultState = {
+  'ETH-BTC': null,
+  'NEO-BTC': null,
+  'KCS-BTC': null,
+  'BCH-BTC': null
+};
 
 var intraKucoinReducer = function intraKucoinReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _defaultState;

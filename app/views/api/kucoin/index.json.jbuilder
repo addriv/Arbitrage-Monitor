@@ -1,1 +1,1 @@
-json.extract! @data, :coin_type, :last_trade_price
+json.extract! @data, :symbol, :lastTradePrice, :buy, :sell
