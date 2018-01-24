@@ -21313,9 +21313,17 @@ var _reduxThunk = __webpack_require__(74);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
+var _reduxLogger = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"redux-logger\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+
+var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
+
 var _root_reducer = __webpack_require__(75);
 
+var _root_reducer2 = _interopRequireDefault(_root_reducer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var middlewares = [_reduxThunk2.default];
 
 /***/ }),
 /* 74 */
@@ -21353,6 +21361,10 @@ exports['default'] = thunk;
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _redux = __webpack_require__(50);
 
 var _ui_reducer = __webpack_require__(76);
@@ -21364,6 +21376,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var rootReducer = (0, _redux.combineReducers)({
   ui: _ui_reducer2.default
 });
+
+exports.default = rootReducer;
 
 /***/ }),
 /* 76 */
