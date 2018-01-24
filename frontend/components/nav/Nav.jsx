@@ -1,13 +1,13 @@
 import React from 'react';
 
-export default class HomeForm extends React.Component {
+export default class Nav extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
     return (
-      <div>This is the HomeForm component</div>
+      <div>This is the NAV component</div>
     );
   }
 }
