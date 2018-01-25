@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { kucoinURI } from '../../util/kucoin_api_util';
 
-export const RECEIVE_KUCOIN_RATIO = 'RECEIVE_KUCOIN_RATIO';
+export const RECEIVE_KUCOIN_BTC_RATIO = 'RECEIVE_KUCOIN_BTC_RATIO';
+export const RECEIVE_KUCOIN_NEO_RATIO = 'RECEIVE_KUCOIN_NEO_RATIO';
 
-const receiveKucoinRatio = (symbol, ratio) => ({
-  type: RECEIVE_KUCOIN_RATIO,
+const receiveKucoinRatio = (quoteCoin, symbol, ratio) => ({
+  type: `RECEIVE_KUCOIN_${quoteCoin}_RATIO`,
   symbol,
   ratio
 });
@@ -15,6 +16,6 @@ export const fetchKucoinRatio = (baseCoin, quoteCoin, type) => dispatch => {
 
   axios.get(uri).then((response) => {
     const data = response.data;
-    dispatch(receiveKucoinRatio(data.symbol, data[type]));
+    dispatch(receiveKucoinRatio(quoteCoin, data.symbol, data[type]));
   });
 };

@@ -1,21 +1,27 @@
 import { connect } from 'react-redux';
 import Kucoin from './Kucoin';
 import { fetchKucoinRatio } from '../../actions/intra/intra_kucoin_actions';
-import { BTCPairsSelector } from '../../selectors/kucoin_selectors';
+import { kucoinPairsSelector } from '../../selectors/kucoin_selectors';
 
 // state = {
 //   arbitrage: {
 //     intra: {
 //      kucoin: {
-//        BTCPairs: {
-        //  'ETH-BTC': null,
-        //  'NEO-BTC': null,
-        //  'KCS-BTC': null,
-        //  'BCH-BTC': null
-//        },
-//        ArbitragePairs: {
-
-//        }
+//       ratios: {
+//         BTCPairs: {
+//           'ETH-BTC': null,
+//           'NEO-BTC': null,
+//           'KCS-BTC': null,
+//           'BCH-BTC': null
+//         },
+//         NEOPairs: {
+//           'DBC-NEO': null
+//         }
+//       },
+//       vehicles: [
+//         'DBC',
+//         'RPX'
+//       ]
 //      } 
 //     }
 //   },
@@ -24,7 +30,8 @@ import { BTCPairsSelector } from '../../selectors/kucoin_selectors';
 
 const mapStateToProps = (state) => ({
   intraKucoin: state.arbitrage.intra.kucoin,
-  BTCPairs: BTCPairsSelector(state)
+  BTCPairs: kucoinPairsSelector(state, 'BTC'),
+  NEOPairs: kucoinPairsSelector(state, 'NEO')
 });
 
 const mapDispatchToProps = (dispatch) => ({

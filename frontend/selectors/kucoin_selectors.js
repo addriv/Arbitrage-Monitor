@@ -1,4 +1,5 @@
-// Returns BTC trading pairs symbols
-export const BTCPairsSelector = (state) => {
-  return Object.keys(state.arbitrage.intra.kucoin.BTCPairs);
+// Returns list of trading pairs
+export const kucoinPairsSelector = (state, quoteCoin) => {
+  return Object.keys(state.arbitrage.intra.kucoin.ratios[`${quoteCoin}Pairs`]);
 };
+

@@ -47,6 +47,9 @@ export default class Kucoin extends React.Component {
           <div className="header-label">Assets</div>
           { this.BTCPairsDisplay() }
         </div>
+        <div className="rows">
+
+        </div>
       </div>
     );
   }

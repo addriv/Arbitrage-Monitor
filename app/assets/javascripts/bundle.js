@@ -25862,15 +25862,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //   arbitrage: {
 //     intra: {
 //      kucoin: {
-//        BTCPairs: {
-//  'ETH-BTC': null,
-//  'NEO-BTC': null,
-//  'KCS-BTC': null,
-//  'BCH-BTC': null
-//        },
-//        ArbitragePairs: {
-
-//        }
+//       ratios: {
+//         BTCPairs: {
+//           'ETH-BTC': null,
+//           'NEO-BTC': null,
+//           'KCS-BTC': null,
+//           'BCH-BTC': null
+//         },
+//         NEOPairs: {
+//           'DBC-NEO': null
+//         }
+//       },
+//       vehicles: [
+//         'DBC',
+//         'RPX'
+//       ]
 //      } 
 //     }
 //   },
@@ -25880,7 +25886,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mapStateToProps = function mapStateToProps(state) {
   return {
     intraKucoin: state.arbitrage.intra.kucoin,
-    BTCPairs: (0, _kucoin_selectors.BTCPairsSelector)(state)
+    BTCPairs: (0, _kucoin_selectors.kucoinPairsSelector)(state, 'BTC'),
+    NEOPairs: (0, _kucoin_selectors.kucoinPairsSelector)(state, 'NEO')
   };
 };
 
@@ -25999,7 +26006,8 @@ var Kucoin = function (_React$Component) {
             'Assets'
           ),
           this.BTCPairsDisplay()
-        )
+        ),
+        _react2.default.createElement('div', { className: 'rows' })
       );
     }
   }]);
@@ -26073,14 +26081,19 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(11);
 
-var _kucoin_btc_pairs_reducer = __webpack_require__(159);
+var _kucoin_ratios_reducer = __webpack_require__(161);
 
-var _kucoin_btc_pairs_reducer2 = _interopRequireDefault(_kucoin_btc_pairs_reducer);
+var _kucoin_ratios_reducer2 = _interopRequireDefault(_kucoin_ratios_reducer);
+
+var _kucoin_vehicles_reducer = __webpack_require__(162);
+
+var _kucoin_vehicles_reducer2 = _interopRequireDefault(_kucoin_vehicles_reducer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var intraKucoinReducer = (0, _redux.combineReducers)({
-  BTCPairs: _kucoin_btc_pairs_reducer2.default
+  vehicles: _kucoin_vehicles_reducer2.default,
+  ratios: _kucoin_ratios_reducer2.default
 });
 
 exports.default = intraKucoinReducer;
@@ -26775,7 +26788,7 @@ module.exports = Cancel;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchKucoinRatio = exports.RECEIVE_KUCOIN_RATIO = undefined;
+exports.fetchKucoinRatio = exports.RECEIVE_KUCOIN_NEO_RATIO = exports.RECEIVE_KUCOIN_BTC_RATIO = undefined;
 
 var _axios = __webpack_require__(138);
 
@@ -26785,11 +26798,12 @@ var _kucoin_api_util = __webpack_require__(157);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var RECEIVE_KUCOIN_RATIO = exports.RECEIVE_KUCOIN_RATIO = 'RECEIVE_KUCOIN_RATIO';
+var RECEIVE_KUCOIN_BTC_RATIO = exports.RECEIVE_KUCOIN_BTC_RATIO = 'RECEIVE_KUCOIN_BTC_RATIO';
+var RECEIVE_KUCOIN_NEO_RATIO = exports.RECEIVE_KUCOIN_NEO_RATIO = 'RECEIVE_KUCOIN_NEO_RATIO';
 
-var receiveKucoinRatio = function receiveKucoinRatio(symbol, ratio) {
+var receiveKucoinRatio = function receiveKucoinRatio(quoteCoin, symbol, ratio) {
   return {
-    type: RECEIVE_KUCOIN_RATIO,
+    type: 'RECEIVE_KUCOIN_' + quoteCoin + '_RATIO',
     symbol: symbol,
     ratio: ratio
   };
@@ -26802,7 +26816,7 @@ var fetchKucoinRatio = exports.fetchKucoinRatio = function fetchKucoinRatio(base
 
     _axios2.default.get(uri).then(function (response) {
       var data = response.data;
-      dispatch(receiveKucoinRatio(data.symbol, data[type]));
+      dispatch(receiveKucoinRatio(quoteCoin, data.symbol, data[type]));
     });
   };
 };
@@ -27721,9 +27735,9 @@ var kucoinURI = exports.kucoinURI = function kucoinURI(baseCoin, quoteCoin) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-// Returns BTC trading pairs symbols
-var BTCPairsSelector = exports.BTCPairsSelector = function BTCPairsSelector(state) {
-  return Object.keys(state.arbitrage.intra.kucoin.BTCPairs);
+// Returns list of trading pairs
+var kucoinPairsSelector = exports.kucoinPairsSelector = function kucoinPairsSelector(state, quoteCoin) {
+  return Object.keys(state.arbitrage.intra.kucoin.ratios[quoteCoin + "Pairs"]);
 };
 
 /***/ }),
@@ -27752,7 +27766,7 @@ var kucoinBTCPairsReducer = function kucoinBTCPairsReducer() {
 
   Object.freeze(state);
   switch (action.type) {
-    case _intra_kucoin_actions.RECEIVE_KUCOIN_RATIO:
+    case _intra_kucoin_actions.RECEIVE_KUCOIN_BTC_RATIO:
       var newState = Object.assign({}, state);
       newState[action.symbol] = action.ratio;
       return newState;
@@ -27762,6 +27776,95 @@ var kucoinBTCPairsReducer = function kucoinBTCPairsReducer() {
 };
 
 exports.default = kucoinBTCPairsReducer;
+
+/***/ }),
+/* 160 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _intra_kucoin_actions = __webpack_require__(137);
+
+var _defaultState = {
+  'DBC-NEO': null
+};
+
+var kucoinNEOPairsReducer = function kucoinNEOPairsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _defaultState;
+  var action = arguments[1];
+
+  Object.freeze(state);
+  switch (action.type) {
+    case _intra_kucoin_actions.RECEIVE_KUCOIN_NEO_RATIO:
+      var newState = Object.assign({}, state);
+      newState[action.symbol] = action.ratio;
+      return newState;
+    default:
+      return state;
+  }
+};
+
+exports.default = kucoinNEOPairsReducer;
+
+/***/ }),
+/* 161 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _redux = __webpack_require__(11);
+
+var _kucoin_btc_pairs_reducer = __webpack_require__(159);
+
+var _kucoin_btc_pairs_reducer2 = _interopRequireDefault(_kucoin_btc_pairs_reducer);
+
+var _kucoin_neo_pairs_reducer = __webpack_require__(160);
+
+var _kucoin_neo_pairs_reducer2 = _interopRequireDefault(_kucoin_neo_pairs_reducer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var kucoinRatiosReducer = (0, _redux.combineReducers)({
+  BTCPairs: _kucoin_btc_pairs_reducer2.default,
+  NEOPairs: _kucoin_neo_pairs_reducer2.default
+});
+
+exports.default = kucoinRatiosReducer;
+
+/***/ }),
+/* 162 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _defaultState = ['DBC'];
+
+var kucoinNEOPairsReducer = function kucoinNEOPairsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _defaultState;
+  var action = arguments[1];
+
+  Object.freeze(state);
+  switch (action.type) {
+    default:
+      return state;
+  }
+};
+
+exports.default = kucoinNEOPairsReducer;
 
 /***/ })
 /******/ ]);

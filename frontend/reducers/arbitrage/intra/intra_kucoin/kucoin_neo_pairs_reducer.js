@@ -1,18 +1,15 @@
 import { 
-  RECEIVE_KUCOIN_BTC_RATIO 
+  RECEIVE_KUCOIN_NEO_RATIO 
 } from "../../../../actions/intra/intra_kucoin_actions";
 
 const _defaultState = {
-  'ETH-BTC': null,
-  'NEO-BTC': null,
-  'KCS-BTC': null,
-  'BCH-BTC': null
+  'DBC-NEO': null
 };
 
-const kucoinBTCPairsReducer = (state = _defaultState, action) => {
+const kucoinNEOPairsReducer = (state = _defaultState, action) => {
   Object.freeze(state);
   switch (action.type) {
-    case RECEIVE_KUCOIN_BTC_RATIO:
+    case RECEIVE_KUCOIN_NEO_RATIO:
       const newState = Object.assign({}, state);
       newState[action.symbol] = action.ratio;
       return newState;
@@ -21,4 +18,4 @@ const kucoinBTCPairsReducer = (state = _defaultState, action) => {
   }
 };
 
-export default kucoinBTCPairsReducer;
+export default kucoinNEOPairsReducer;
