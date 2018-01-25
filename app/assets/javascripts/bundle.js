@@ -26029,10 +26029,12 @@ var Kucoin = function (_React$Component) {
       return vehicleCoins.map(function (vehicleCoin, i) {
         var tradingPairs = ['BTC', 'ETH', 'NEO', 'KCS', 'BCH'];
         var rowInfo = tradingPairs.map(function (pair, j) {
-          var ratio = void 0;
+          var ratio = void 0,
+              arbitrage = void 0;
           var pairRatios = _this5.props.intraKucoin.ratios[pair + 'Pairs'];
           if (pairRatios) {
             ratio = pairRatios[vehicleCoin + '-' + pair];
+            arbitrage = _this5.calculateArbitrage(vehicleCoin, pair);
           }
 
           if (pair === 'BTC') {
@@ -26067,6 +26069,12 @@ var Kucoin = function (_React$Component) {
                 'div',
                 { className: 'ratio' },
                 ratio
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'arbitrage-value' },
+                arbitrage,
+                '%'
               )
             );
           }
@@ -26074,14 +26082,31 @@ var Kucoin = function (_React$Component) {
 
         return _react2.default.createElement(
           'div',
-          { className: 'row' },
+          { key: i, className: 'row' },
           rowInfo
         );
       });
     }
   }, {
     key: 'calculateArbitrage',
-    value: function calculateArbitrage() {}
+    value: function calculateArbitrage(vehicleCoin, outputCoin) {
+      // Constants
+      var ratiosData = this.props.intraKucoin.ratios;
+      var BTCratio = ratiosData.BTCPairs[vehicleCoin + '-BTC'];
+      var outputRatio = ratiosData[outputCoin + 'Pairs'][vehicleCoin + '-' + outputCoin];
+      var outputBTCRatio = ratiosData.BTCPairs[outputCoin + '-BTC'];
+      var netAfterFeeFactor = 1 - 0.1 / 100;
+
+      // Calculations
+      var vehicleVolume = 1 / BTCratio * netAfterFeeFactor;
+      var outputVolume = vehicleVolume * outputRatio * netAfterFeeFactor;
+      var newInputVolume = outputVolume * outputBTCRatio * netAfterFeeFactor;
+      var netChange = newInputVolume - 1;
+      var netPctChange = (netChange / 1 * 100).toFixed(2);
+      var tradeStatus = newInputVolume > 1 ? 'PROFIT' : 'LOSS';
+
+      return netPctChange;
+    }
   }, {
     key: 'render',
     value: function render() {

@@ -68,10 +68,11 @@ export default class Kucoin extends React.Component {
     return vehicleCoins.map((vehicleCoin, i) => {
       const tradingPairs = ['BTC', 'ETH', 'NEO', 'KCS', 'BCH'];
       const rowInfo = tradingPairs.map((pair, j) => {
-        let ratio;
+        let ratio, arbitrage;
         const pairRatios = this.props.intraKucoin.ratios[`${pair}Pairs`];
         if (pairRatios) {
           ratio = pairRatios[`${vehicleCoin}-${pair}`];
+          arbitrage = this.calculateArbitrage(vehicleCoin, pair);
         }
 
         if (pair === 'BTC') {
@@ -89,21 +90,37 @@ export default class Kucoin extends React.Component {
           return (
             <div className="row-data">
               <div className="ratio">{ratio}</div>
+              <div className="arbitrage-value">{arbitrage}%</div>
             </div>
           );
         }
       });
 
       return (
-        <div className="row">
+        <div key={i} className="row">
           { rowInfo }
         </div>
       );
     });
   }
 
-  calculateArbitrage() {
-    
+  calculateArbitrage(vehicleCoin, outputCoin) {
+    // Constants
+    const ratiosData = this.props.intraKucoin.ratios;
+    const BTCratio = ratiosData.BTCPairs[`${vehicleCoin}-BTC`];
+    const outputRatio = ratiosData[`${outputCoin}Pairs`][`${vehicleCoin}-${outputCoin}`];
+    const outputBTCRatio = ratiosData.BTCPairs[`${outputCoin}-BTC`];
+    const netAfterFeeFactor = 1 -  (0.1 / 100);
+
+    // Calculations
+    const vehicleVolume = 1 / BTCratio * netAfterFeeFactor;
+    const outputVolume = vehicleVolume * outputRatio * netAfterFeeFactor;
+    const newInputVolume = outputVolume * outputBTCRatio * netAfterFeeFactor;
+    const netChange = newInputVolume - 1;
+    const netPctChange = (netChange / 1 * 100).toFixed(2);
+    const tradeStatus = newInputVolume > 1 ? 'PROFIT' : 'LOSS';
+
+    return netPctChange;
   }
 
   render() {
