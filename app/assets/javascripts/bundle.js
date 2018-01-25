@@ -25863,10 +25863,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //     intra: {
 //      kucoin: {
 //        BTCPairs: {
-//          'ETH-BTC': null,
-//          'NEO-BTC': null,
-//          'KCS-BTC': null,
-//          'BCH-BTC': null
+//  'ETH-BTC': null,
+//  'NEO-BTC': null,
+//  'KCS-BTC': null,
+//  'BCH-BTC': null
 //        },
 //        ArbitragePairs: {
 
@@ -25879,7 +25879,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    state: state,
+    intraKucoin: state.arbitrage.intra.kucoin,
     BTCPairs: (0, _kucoin_selectors.BTCPairsSelector)(state)
   };
 };
@@ -25928,7 +25928,10 @@ var Kucoin = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Kucoin.__proto__ || Object.getPrototypeOf(Kucoin)).call(this, props));
 
     _this.state = {
-      DBC: 0
+      'ETH-BTC': null,
+      'NEO-BTC': null,
+      'KCS-BTC': null,
+      'BCH-BTC': null
     };
     return _this;
   }
@@ -25936,15 +25939,50 @@ var Kucoin = function (_React$Component) {
   _createClass(Kucoin, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var BTCPairs = Object.keys(this.props.intraKucoin.BTCPairs);
+      // const BTCPairs = this.props.BTCPairs;
+      // BTCPairs.forEach((symbol) => {
+      //   const pair = symbol.split('-');
+      //   const baseCoin = pair[0];
+      //   const quoteCoin = pair[1];
+      //   this.props.fetchKucoinRatio(baseCoin, quoteCoin, 'sell');
+      // });
+      this.props.fetchKucoinRatio('NEO', 'BTC', 'sell');
+    }
+  }, {
+    key: 'BTCPairsDisplay',
+    value: function BTCPairsDisplay() {
+      var _this2 = this;
+
+      return this.props.BTCPairs.map(function (pair, i) {
+        var ratio = _this2.props.intraKucoin[pair];
+        return _react2.default.createElement(
+          'div',
+          { key: i, className: 'kucoin-btc-pair' },
+          _react2.default.createElement(
+            'div',
+            { className: 'symbol', id: pair },
+            pair
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'ratio', id: pair },
+            ratio
+          )
+        );
+      });
     }
   }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
-        'This is the KUCOIN component'
+        { className: 'intra-kucoin' },
+        _react2.default.createElement(
+          'div',
+          null,
+          'This is the KUCOIN component'
+        ),
+        this.BTCPairsDisplay()
       );
     }
   }]);
@@ -26018,25 +26056,20 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(11);
 
-var _kucoin_trading_pairs_reducer = __webpack_require__(129);
+var _kucoin_btc_pairs_reducer = __webpack_require__(159);
 
-var _kucoin_trading_pairs_reducer2 = _interopRequireDefault(_kucoin_trading_pairs_reducer);
+var _kucoin_btc_pairs_reducer2 = _interopRequireDefault(_kucoin_btc_pairs_reducer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var intraKucoinReducer = (0, _redux.combineReducers)({
-  BTCPairs: _kucoin_trading_pairs_reducer2.default
+  BTCPairs: _kucoin_btc_pairs_reducer2.default
 });
 
 exports.default = intraKucoinReducer;
 
 /***/ }),
-/* 129 */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/Awesome/Desktop/Projects/arbitrage/frontend/reducers/arbitrage/intra/intra_kucoin/kucoin_trading_pairs_reducer.js'\n    at Error (native)");
-
-/***/ }),
+/* 129 */,
 /* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -26725,7 +26758,7 @@ module.exports = Cancel;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchKucoinRatio = exports.RECEIVE_RATIO = undefined;
+exports.fetchKucoinRatio = exports.RECEIVE_KUCOIN_RATIO = undefined;
 
 var _axios = __webpack_require__(138);
 
@@ -26735,11 +26768,11 @@ var _kucoin_api_util = __webpack_require__(157);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var RECEIVE_RATIO = exports.RECEIVE_RATIO = 'RECEIVE_RATIO';
+var RECEIVE_KUCOIN_RATIO = exports.RECEIVE_KUCOIN_RATIO = 'RECEIVE_KUCOIN_RATIO';
 
 var receiveKucoinRatio = function receiveKucoinRatio(symbol, ratio) {
   return {
-    type: RECEIVE_RATIO,
+    type: RECEIVE_KUCOIN_RATIO,
     symbol: symbol,
     ratio: ratio
   };
@@ -26751,10 +26784,8 @@ var fetchKucoinRatio = exports.fetchKucoinRatio = function fetchKucoinRatio(base
     var uri = (0, _kucoin_api_util.kucoinURI)(baseCoin, quoteCoin);
 
     _axios2.default.get(uri).then(function (response) {
-      var data = response['data']['data'];
-      var symbol = data['symbol'];
-      var ratio = data[type];
-      dispatch(receiveKucoinRatio(baseCoin, quoteCoin, ratio));
+      var data = response.data;
+      dispatch(receiveKucoinRatio(data.symbol, data[type]));
     });
   };
 };
@@ -27677,6 +27708,43 @@ Object.defineProperty(exports, "__esModule", {
 var BTCPairsSelector = exports.BTCPairsSelector = function BTCPairsSelector(state) {
   return Object.keys(state.arbitrage.intra.kucoin.BTCPairs);
 };
+
+/***/ }),
+/* 159 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _intra_kucoin_actions = __webpack_require__(137);
+
+var _defaultState = {
+  'ETH-BTC': null,
+  'NEO-BTC': null,
+  'KCS-BTC': null,
+  'BCH-BTC': null
+};
+
+var kucoinBTCPairsReducer = function kucoinBTCPairsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _defaultState;
+  var action = arguments[1];
+
+  Object.freeze(state);
+  switch (action.type) {
+    case _intra_kucoin_actions.RECEIVE_KUCOIN_RATIO:
+      var newState = Object.assign({}, _defaultState);
+      newState[action.symbol] = action.ratio;
+      return newState;
+    default:
+      return state;
+  }
+};
+
+exports.default = kucoinBTCPairsReducer;
 
 /***/ })
 /******/ ]);

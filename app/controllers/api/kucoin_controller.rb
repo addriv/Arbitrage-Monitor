@@ -21,6 +21,6 @@ class Api::KucoinController < ApplicationController
   private
 
   def kucoin_params
-    params.permit(:base_coin, :quote_coin)
+    params.permit(:base_coin, :quote_coin, :format)
   end
 end

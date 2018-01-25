@@ -8,10 +8,10 @@ import { BTCPairsSelector } from '../../selectors/kucoin_selectors';
 //     intra: {
 //      kucoin: {
 //        BTCPairs: {
-//          'ETH-BTC': null,
-//          'NEO-BTC': null,
-//          'KCS-BTC': null,
-//          'BCH-BTC': null
+        //  'ETH-BTC': null,
+        //  'NEO-BTC': null,
+        //  'KCS-BTC': null,
+        //  'BCH-BTC': null
 //        },
 //        ArbitragePairs: {
 
@@ -23,7 +23,7 @@ import { BTCPairsSelector } from '../../selectors/kucoin_selectors';
 // }
 
 const mapStateToProps = (state) => ({
-  state,
+  intraKucoin: state.arbitrage.intra.kucoin,
   BTCPairs: BTCPairsSelector(state)
 });
 
