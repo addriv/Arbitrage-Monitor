@@ -25974,12 +25974,14 @@ var Kucoin = function (_React$Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.getBTCRatios();
-      this.getVehicleRatios();
-      // setInterval(() => {
-      //   this.getBTCRatios();
-      //   this.getVehicleRatios();
-      // }, 1000);
+      var _this4 = this;
+
+      // this.getBTCRatios();
+      // this.getVehicleRatios();
+      setInterval(function () {
+        _this4.getBTCRatios();
+        _this4.getVehicleRatios();
+      }, 1000);
     }
   }, {
     key: 'headerDisplay',
@@ -26020,7 +26022,7 @@ var Kucoin = function (_React$Component) {
   }, {
     key: 'rowDisplay',
     value: function rowDisplay() {
-      var _this4 = this;
+      var _this5 = this;
 
       var vehiclesData = this.props.intraKucoin.vehicles;
       var vehicleCoins = Object.keys(vehiclesData);
@@ -26028,26 +26030,46 @@ var Kucoin = function (_React$Component) {
         var tradingPairs = ['BTC', 'ETH', 'NEO', 'KCS', 'BCH'];
         var rowInfo = tradingPairs.map(function (pair, j) {
           var ratio = void 0;
-          var pairRatios = _this4.props.intraKucoin.ratios[pair + 'Pairs'];
+          var pairRatios = _this5.props.intraKucoin.ratios[pair + 'Pairs'];
           if (pairRatios) {
             ratio = pairRatios[vehicleCoin + '-' + pair];
           }
-          return _react2.default.createElement(
-            'div',
-            { className: 'row-info' },
-            _react2.default.createElement(
+
+          if (pair === 'BTC') {
+            return _react2.default.createElement(
               'div',
-              { className: pair },
-              vehicleCoin,
-              '/',
-              pair
-            ),
-            _react2.default.createElement(
+              { className: 'row-header' },
+              _react2.default.createElement(
+                'div',
+                { className: 'symbol' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'base-coin' },
+                  vehicleCoin
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'quote-coin' },
+                  '/ BTC'
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'ratio' },
+                ratio
+              )
+            );
+          } else {
+            return _react2.default.createElement(
               'div',
-              { className: 'ratio' },
-              ratio
-            )
-          );
+              { className: 'row-data' },
+              _react2.default.createElement(
+                'div',
+                { className: 'ratio' },
+                ratio
+              )
+            );
+          }
         });
 
         return _react2.default.createElement(
@@ -26057,6 +26079,9 @@ var Kucoin = function (_React$Component) {
         );
       });
     }
+  }, {
+    key: 'calculateArbitrage',
+    value: function calculateArbitrage() {}
   }, {
     key: 'render',
     value: function render() {

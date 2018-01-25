@@ -34,12 +34,12 @@ export default class Kucoin extends React.Component {
   }
 
   componentDidMount() {
-    this.getBTCRatios();
-    this.getVehicleRatios();
-    // setInterval(() => {
-    //   this.getBTCRatios();
-    //   this.getVehicleRatios();
-    // }, 1000);
+    // this.getBTCRatios();
+    // this.getVehicleRatios();
+    setInterval(() => {
+      this.getBTCRatios();
+      this.getVehicleRatios();
+    }, 1000);
   }
 
   headerDisplay() {
@@ -73,12 +73,25 @@ export default class Kucoin extends React.Component {
         if (pairRatios) {
           ratio = pairRatios[`${vehicleCoin}-${pair}`];
         }
-        return (
-          <div className="row-info">
-            <div className={pair}>{vehicleCoin}/{pair}</div>
-            <div className="ratio">{ratio}</div>
-          </div>
-        );
+
+        if (pair === 'BTC') {
+          return (
+            <div className="row-header">
+              <div className="symbol">
+                <div className="base-coin">{vehicleCoin}</div>
+                <div className="quote-coin">/ BTC</div>
+              </div>
+              <div className="ratio">{ratio}</div>
+            </div>
+          );
+        }
+        else {
+          return (
+            <div className="row-data">
+              <div className="ratio">{ratio}</div>
+            </div>
+          );
+        }
       });
 
       return (
@@ -87,6 +100,10 @@ export default class Kucoin extends React.Component {
         </div>
       );
     });
+  }
+
+  calculateArbitrage() {
+    
   }
 
   render() {
