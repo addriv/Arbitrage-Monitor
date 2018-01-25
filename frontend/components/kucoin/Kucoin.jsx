@@ -22,7 +22,7 @@ export default class Kucoin extends React.Component {
   }
 
   BTCPairsDisplay() {
-    const BTCPairs = this.props.intraKucoin.BTCPairs;
+    const BTCPairs = this.props.intraKucoin.ratios.BTCPairs;
     return this.props.BTCPairs.map((pair, i) => {
       const ratio = BTCPairs[pair];
       const pairCoins = pair.split('-');

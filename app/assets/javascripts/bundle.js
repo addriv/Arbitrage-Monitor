@@ -25959,7 +25959,7 @@ var Kucoin = function (_React$Component) {
   }, {
     key: 'BTCPairsDisplay',
     value: function BTCPairsDisplay() {
-      var BTCPairs = this.props.intraKucoin.BTCPairs;
+      var BTCPairs = this.props.intraKucoin.ratios.BTCPairs;
       return this.props.BTCPairs.map(function (pair, i) {
         var ratio = BTCPairs[pair];
         var pairCoins = pair.split('-');
