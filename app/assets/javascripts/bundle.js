@@ -25964,7 +25964,7 @@ var Kucoin = function (_React$Component) {
       var vehiclesData = this.props.intraKucoin.vehicles;
       var vehicleCoins = Object.keys(vehiclesData);
       vehicleCoins.forEach(function (vehicleCoin) {
-        var tradingPairs = vehiclesData[vehicleCoins];
+        var tradingPairs = vehiclesData[vehicleCoin];
         tradingPairs.forEach(function (quoteCoin) {
           var ratioType = quoteCoin === 'BTC' ? 'sell' : 'buy';
           _this3.props.fetchKucoinRatio(vehicleCoin, quoteCoin, ratioType);
@@ -26034,13 +26034,13 @@ var Kucoin = function (_React$Component) {
           var pairRatios = _this5.props.intraKucoin.ratios[pair + 'Pairs'];
           if (pairRatios) {
             ratio = pairRatios[vehicleCoin + '-' + pair];
-            arbitrage = _this5.calculateArbitrage(vehicleCoin, pair);
+            arbitrage = _this5.calculateArbitrage(vehicleCoin, pair) + '%';
           }
 
           if (pair === 'BTC') {
             return _react2.default.createElement(
               'div',
-              { className: 'row-header' },
+              { key: j, className: 'row-header' },
               _react2.default.createElement(
                 'div',
                 { className: 'symbol' },
@@ -26064,7 +26064,7 @@ var Kucoin = function (_React$Component) {
           } else {
             return _react2.default.createElement(
               'div',
-              { className: 'row-data' },
+              { key: j, className: 'row-data' },
               _react2.default.createElement(
                 'div',
                 { className: 'ratio' },
@@ -26073,8 +26073,7 @@ var Kucoin = function (_React$Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'arbitrage-value' },
-                arbitrage,
-                '%'
+                arbitrage
               )
             );
           }
@@ -27972,7 +27971,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var _defaultState = {
-  'DBC': ['BTC', 'ETH', 'NEO']
+  'DBC': ['BTC', 'ETH', 'NEO'],
+  'RPX': ['BTC', 'ETH', 'NEO', 'KCS']
 };
 
 var kucoinNEOPairsReducer = function kucoinNEOPairsReducer() {

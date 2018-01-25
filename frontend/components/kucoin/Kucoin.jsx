@@ -25,7 +25,7 @@ export default class Kucoin extends React.Component {
     const vehiclesData = this.props.intraKucoin.vehicles;
     const vehicleCoins = Object.keys(vehiclesData);
     vehicleCoins.forEach((vehicleCoin) => {
-      const tradingPairs = vehiclesData[vehicleCoins];
+      const tradingPairs = vehiclesData[vehicleCoin];
       tradingPairs.forEach((quoteCoin) => {
         const ratioType = quoteCoin === 'BTC' ? 'sell' : 'buy';
         this.props.fetchKucoinRatio(vehicleCoin, quoteCoin, ratioType);
@@ -72,12 +72,12 @@ export default class Kucoin extends React.Component {
         const pairRatios = this.props.intraKucoin.ratios[`${pair}Pairs`];
         if (pairRatios) {
           ratio = pairRatios[`${vehicleCoin}-${pair}`];
-          arbitrage = this.calculateArbitrage(vehicleCoin, pair);
+          arbitrage = `${this.calculateArbitrage(vehicleCoin, pair)}%`;
         }
 
         if (pair === 'BTC') {
           return (
-            <div className="row-header">
+            <div key={j} className="row-header">
               <div className="symbol">
                 <div className="base-coin">{vehicleCoin}</div>
                 <div className="quote-coin">/ BTC</div>
@@ -88,9 +88,9 @@ export default class Kucoin extends React.Component {
         }
         else {
           return (
-            <div className="row-data">
+            <div key={j} className="row-data">
               <div className="ratio">{ratio}</div>
-              <div className="arbitrage-value">{arbitrage}%</div>
+              <div className="arbitrage-value">{arbitrage}</div>
             </div>
           );
         }
