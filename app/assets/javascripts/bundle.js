@@ -25944,8 +25944,8 @@ var Kucoin = function (_React$Component) {
   }
 
   _createClass(Kucoin, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
+    key: 'getBTCRatios',
+    value: function getBTCRatios() {
       var _this2 = this;
 
       var BTCPairs = this.props.BTCPairs;
@@ -25953,14 +25953,40 @@ var Kucoin = function (_React$Component) {
         var pair = symbol.split('-');
         var baseCoin = pair[0];
         var quoteCoin = pair[1];
-        _this2.props.fetchKucoinRatio(baseCoin, quoteCoin, 'sell');
+        _this2.props.fetchKucoinRatio(baseCoin, quoteCoin, 'buy');
       });
     }
   }, {
-    key: 'BTCPairsDisplay',
-    value: function BTCPairsDisplay() {
+    key: 'getVehicleRatios',
+    value: function getVehicleRatios() {
+      var _this3 = this;
+
+      var vehiclesData = this.props.intraKucoin.vehicles;
+      var vehicleCoins = Object.keys(vehiclesData);
+      vehicleCoins.forEach(function (vehicleCoin) {
+        var tradingPairs = vehiclesData[vehicleCoins];
+        tradingPairs.forEach(function (quoteCoin) {
+          var ratioType = quoteCoin === 'BTC' ? 'sell' : 'buy';
+          _this3.props.fetchKucoinRatio(vehicleCoin, quoteCoin, ratioType);
+        });
+      });
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.getBTCRatios();
+      this.getVehicleRatios();
+      // setInterval(() => {
+      //   this.getBTCRatios();
+      //   this.getVehicleRatios();
+      // }, 1000);
+    }
+  }, {
+    key: 'headerDisplay',
+    value: function headerDisplay() {
+      var headerPairs = ['ETH-BTC', 'NEO-BTC', 'KCS-BTC', 'BCH-BTC'];
       var BTCPairs = this.props.intraKucoin.ratios.BTCPairs;
-      return this.props.BTCPairs.map(function (pair, i) {
+      return headerPairs.map(function (pair, i) {
         var ratio = BTCPairs[pair];
         var pairCoins = pair.split('-');
         var baseCoin = pairCoins[0];
@@ -25992,6 +26018,46 @@ var Kucoin = function (_React$Component) {
       });
     }
   }, {
+    key: 'rowDisplay',
+    value: function rowDisplay() {
+      var _this4 = this;
+
+      var vehiclesData = this.props.intraKucoin.vehicles;
+      var vehicleCoins = Object.keys(vehiclesData);
+      return vehicleCoins.map(function (vehicleCoin, i) {
+        var tradingPairs = ['BTC', 'ETH', 'NEO', 'KCS', 'BCH'];
+        var rowInfo = tradingPairs.map(function (pair, j) {
+          var ratio = void 0;
+          var pairRatios = _this4.props.intraKucoin.ratios[pair + 'Pairs'];
+          if (pairRatios) {
+            ratio = pairRatios[vehicleCoin + '-' + pair];
+          }
+          return _react2.default.createElement(
+            'div',
+            { className: 'row-info' },
+            _react2.default.createElement(
+              'div',
+              { className: pair },
+              vehicleCoin,
+              '/',
+              pair
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'ratio' },
+              ratio
+            )
+          );
+        });
+
+        return _react2.default.createElement(
+          'div',
+          { className: 'row' },
+          rowInfo
+        );
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -25999,15 +26065,19 @@ var Kucoin = function (_React$Component) {
         { className: 'intra-kucoin' },
         _react2.default.createElement(
           'div',
-          { className: 'headers' },
+          { className: 'header' },
           _react2.default.createElement(
             'div',
             { className: 'header-label' },
             'Assets'
           ),
-          this.BTCPairsDisplay()
+          this.headerDisplay()
         ),
-        _react2.default.createElement('div', { className: 'rows' })
+        _react2.default.createElement(
+          'div',
+          { className: 'rows' },
+          this.rowDisplay()
+        )
       );
     }
   }]);
@@ -27851,7 +27921,9 @@ exports.default = kucoinRatiosReducer;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var _defaultState = ['DBC'];
+var _defaultState = {
+  'DBC': ['BTC', 'ETH', 'NEO']
+};
 
 var kucoinNEOPairsReducer = function kucoinNEOPairsReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _defaultState;

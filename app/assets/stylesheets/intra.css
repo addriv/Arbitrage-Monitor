@@ -1,7 +1,7 @@
-.headers {
+.header {
   display: flex;
 }
-.header-label {
+.header-label, .row {
   display: flex;
   flex-direction: column;
   justify-content: center;
