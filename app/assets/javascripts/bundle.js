@@ -25960,7 +25960,7 @@ var Kucoin = function (_React$Component) {
         var quoteCoin = pairCoins[1];
         return _react2.default.createElement(
           'div',
-          { key: i, className: 'btc-pair' },
+          { key: i, className: 'header-label' },
           _react2.default.createElement(
             'div',
             { className: 'symbol', id: pair },
@@ -25972,7 +25972,7 @@ var Kucoin = function (_React$Component) {
             _react2.default.createElement(
               'div',
               { className: 'quote-coin' },
-              '- ',
+              '/ ',
               quoteCoin
             )
           ),
@@ -25993,6 +25993,11 @@ var Kucoin = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'headers' },
+          _react2.default.createElement(
+            'div',
+            { className: 'header-label' },
+            'Assets'
+          ),
           this.BTCPairsDisplay()
         )
       );

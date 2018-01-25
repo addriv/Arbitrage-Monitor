@@ -29,10 +29,10 @@ export default class Kucoin extends React.Component {
       const baseCoin = pairCoins[0];
       const quoteCoin = pairCoins[1];
       return (
-        <div key={i} className="btc-pair">
+        <div key={i} className="header-label">
           <div className="symbol" id={pair}>
             <div className="base-coin">{baseCoin}</div>
-            <div className="quote-coin">- {quoteCoin}</div>
+            <div className="quote-coin">/ {quoteCoin}</div>
           </div>
           <div className="ratio" id={pair}>{ratio}</div>
         </div>
@@ -44,6 +44,7 @@ export default class Kucoin extends React.Component {
     return (
       <div className="intra-kucoin">
         <div className="headers">
+          <div className="header-label">Assets</div>
           { this.BTCPairsDisplay() }
         </div>
       </div>
