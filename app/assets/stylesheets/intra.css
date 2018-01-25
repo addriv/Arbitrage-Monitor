@@ -1,4 +1,27 @@
 .headers {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+}
+.btc-pair {
+  background-color: black;
+  color: white;
+  padding: 20px;
+  border-radius: 3px;
+}
+.symbol {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.base-coin {
+  font-size: 20px;
+  padding: 0 3px;
+}
+.quote-coin {
+  font-size: 10px;
+}
+.ratio {
+
 }

@@ -25955,19 +25955,26 @@ var Kucoin = function (_React$Component) {
       var BTCPairs = this.props.intraKucoin.BTCPairs;
       return this.props.BTCPairs.map(function (pair, i) {
         var ratio = BTCPairs[pair];
-        var baseCoin = pair.split('-')[0];
+        var pairCoins = pair.split('-');
+        var baseCoin = pairCoins[0];
+        var quoteCoin = pairCoins[1];
         return _react2.default.createElement(
           'div',
           { key: i, className: 'btc-pair' },
           _react2.default.createElement(
             'div',
-            { className: 'base-coin' },
-            baseCoin
-          ),
-          _react2.default.createElement(
-            'div',
             { className: 'symbol', id: pair },
-            pair
+            _react2.default.createElement(
+              'div',
+              { className: 'base-coin' },
+              baseCoin
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'quote-coin' },
+              '- ',
+              quoteCoin
+            )
           ),
           _react2.default.createElement(
             'div',
@@ -25983,11 +25990,6 @@ var Kucoin = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'intra-kucoin' },
-        _react2.default.createElement(
-          'div',
-          null,
-          'KUCOIN'
-        ),
         _react2.default.createElement(
           'div',
           { className: 'headers' },
