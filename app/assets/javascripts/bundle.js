@@ -25939,25 +25939,31 @@ var Kucoin = function (_React$Component) {
   _createClass(Kucoin, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      // const BTCPairs = this.props.BTCPairs;
-      // BTCPairs.forEach((symbol) => {
-      //   const pair = symbol.split('-');
-      //   const baseCoin = pair[0];
-      //   const quoteCoin = pair[1];
-      //   this.props.fetchKucoinRatio(baseCoin, quoteCoin, 'sell');
-      // });
-      this.props.fetchKucoinRatio('NEO', 'BTC', 'sell');
+      var _this2 = this;
+
+      var BTCPairs = this.props.BTCPairs;
+      BTCPairs.forEach(function (symbol) {
+        var pair = symbol.split('-');
+        var baseCoin = pair[0];
+        var quoteCoin = pair[1];
+        _this2.props.fetchKucoinRatio(baseCoin, quoteCoin, 'sell');
+      });
     }
   }, {
     key: 'BTCPairsDisplay',
     value: function BTCPairsDisplay() {
-      var _this2 = this;
-
+      var BTCPairs = this.props.intraKucoin.BTCPairs;
       return this.props.BTCPairs.map(function (pair, i) {
-        var ratio = _this2.props.intraKucoin[pair];
+        var ratio = BTCPairs[pair];
+        var baseCoin = pair.split('-')[0];
         return _react2.default.createElement(
           'div',
-          { key: i, className: 'kucoin-btc-pair' },
+          { key: i, className: 'btc-pair' },
+          _react2.default.createElement(
+            'div',
+            { className: 'base-coin' },
+            baseCoin
+          ),
           _react2.default.createElement(
             'div',
             { className: 'symbol', id: pair },
@@ -25980,9 +25986,13 @@ var Kucoin = function (_React$Component) {
         _react2.default.createElement(
           'div',
           null,
-          'This is the KUCOIN component'
+          'KUCOIN'
         ),
-        this.BTCPairsDisplay()
+        _react2.default.createElement(
+          'div',
+          { className: 'headers' },
+          this.BTCPairsDisplay()
+        )
       );
     }
   }]);
@@ -27736,7 +27746,7 @@ var kucoinBTCPairsReducer = function kucoinBTCPairsReducer() {
   Object.freeze(state);
   switch (action.type) {
     case _intra_kucoin_actions.RECEIVE_KUCOIN_RATIO:
-      var newState = Object.assign({}, _defaultState);
+      var newState = Object.assign({}, state);
       newState[action.symbol] = action.ratio;
       return newState;
     default:

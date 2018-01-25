@@ -11,7 +11,7 @@ const kucoinBTCPairsReducer = (state = _defaultState, action) => {
   Object.freeze(state);
   switch (action.type) {
     case RECEIVE_KUCOIN_RATIO:
-      const newState = Object.assign({}, _defaultState);
+      const newState = Object.assign({}, state);
       newState[action.symbol] = action.ratio;
       return newState;
     default:
