@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import Kucoin from './Kucoin';
 import { fetchKucoinRatio } from '../../actions/intra/intra_kucoin_actions';
+import { BTCPairsSelector } from '../../selectors/kucoin_selectors';
 
 // state = {
 //   arbitrage: {
@@ -22,7 +23,8 @@ import { fetchKucoinRatio } from '../../actions/intra/intra_kucoin_actions';
 // }
 
 const mapStateToProps = (state) => ({
-  intraKucoin: state.arbitrage.intra.kucoin
+  state,
+  BTCPairs: BTCPairsSelector(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -25854,6 +25854,8 @@ var _Kucoin2 = _interopRequireDefault(_Kucoin);
 
 var _intra_kucoin_actions = __webpack_require__(137);
 
+var _kucoin_selectors = __webpack_require__(158);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // state = {
@@ -25877,7 +25879,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    intraKucoin: state.arbitrage.intra.kucoin
+    state: state,
+    BTCPairs: (0, _kucoin_selectors.BTCPairsSelector)(state)
   };
 };
 
@@ -25932,7 +25935,9 @@ var Kucoin = function (_React$Component) {
 
   _createClass(Kucoin, [{
     key: 'componentDidMount',
-    value: function componentDidMount() {}
+    value: function componentDidMount() {
+      var BTCPairs = Object.keys(this.props.intraKucoin.BTCPairs);
+    }
   }, {
     key: 'render',
     value: function render() {
@@ -27656,6 +27661,21 @@ Object.defineProperty(exports, "__esModule", {
 });
 var kucoinURI = exports.kucoinURI = function kucoinURI(baseCoin, quoteCoin) {
   return "/api/kucoin?base_coin=" + baseCoin + "&quote_coin=" + quoteCoin;
+};
+
+/***/ }),
+/* 158 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+// Returns BTC trading pairs symbols
+var BTCPairsSelector = exports.BTCPairsSelector = function BTCPairsSelector(state) {
+  return Object.keys(state.arbitrage.intra.kucoin.BTCPairs);
 };
 
 /***/ })

@@ -9,7 +9,7 @@ export default class Kucoin extends React.Component {
   }
 
   componentDidMount() {
-    
+    const BTCPairs = Object.keys(this.props.intraKucoin.BTCPairs);
   }
 
   render() {
