@@ -1,6 +1,7 @@
 const _defaultState = {
   'DBC': ['BTC', 'ETH', 'NEO'],
-  'RPX': ['BTC', 'ETH', 'NEO', 'KCS']
+  'RPX': ['BTC', 'ETH', 'NEO', 'KCS'],
+  'LTC': ['BTC', 'ETH', 'NEO']
 };
 
 const kucoinNEOPairsReducer = (state = _defaultState, action) => {

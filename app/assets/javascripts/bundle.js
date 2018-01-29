@@ -27972,7 +27972,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 var _defaultState = {
   'DBC': ['BTC', 'ETH', 'NEO'],
-  'RPX': ['BTC', 'ETH', 'NEO', 'KCS']
+  'RPX': ['BTC', 'ETH', 'NEO', 'KCS'],
+  'LTC': ['BTC', 'ETH', 'NEO']
 };
 
 var kucoinNEOPairsReducer = function kucoinNEOPairsReducer() {
